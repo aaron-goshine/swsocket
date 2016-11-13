@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>  
+    <meta charset="UTF-8">
+    <title>Untitled Page</title>
+
+  </head>
+  <body>
+    <div>
+      <input id="input" style="width: 100%; heigh: 50; font-size: 30px;"/>
+    </div>
+  <script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io('http://localhost:8000');
+  socket.on('news', function (data) {
+    console.log(data);
+    socket.emit('my other event', { my: 'data' });
+  });
+</script>
+  </body>
+</html>
+
