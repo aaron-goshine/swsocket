@@ -6,17 +6,31 @@
 
   </head>
   <body>
-    <div>
-      <input id="input" style="width: 100%; heigh: 50; font-size: 30px;"/>
-    </div>
-  <script src="/socket.io/socket.io.js"></script>
-<script>
-  var socket = io('http://localhost:8000');
-  socket.on('news', function (data) {
-    console.log(data);
-    socket.emit('my other event', { my: 'data' });
-  });
+    <div id="message"></div>
+    <input id="input" style="width: 100%; heigh: 50; font-size: 30px;"/>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+var nickname = prompt('Enter your nickname');
+var input = document.getElementById('input');
+input.focus();
+
+var socket = io('http://localhost:8000');
+socket.on('news', function (data) {
+  console.log(data);
+  var msg = event.data;
+  var node = document.createTextNode(msg);
+  var messagePanel = document.getElementById('message');
+  messagePanel.appendChild(node);
+});
+
+input.onchange = function (event) {
+  var msg = nickname + ':' + input.value;
+  socket.emit('client', msg);
+  input.value = '';
+};
 </script>
   </body>
 </html>
+
+
 

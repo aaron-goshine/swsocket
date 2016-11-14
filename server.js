@@ -17,11 +17,15 @@ function handler (req, res) {
   });
 }
 
-var sk = {};
 io.on('connection', function (socket) {
-  sk = socket;
   socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
+  socket.on('client', function (data) {
+    socket.emit('news', data);
     console.log(data);
   });
+
+  setInterval(function () {
+    socket.emit('news', new Date());
+    console.log('server push');
+  }, 1000);
 });
